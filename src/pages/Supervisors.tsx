@@ -182,7 +182,7 @@ export function Supervisors() {
             <Button variant="secondary" size="xl" asChild>
               <Link to="/supervisor-signup">Sign Up as Supervisor</Link>
             </Button>
-            <Button variant="outline" size="xl" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" asChild>
+            <Button variant="outline" size="xl" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary bg-transparent" asChild>
               <Link to="/supervisor-signin">Already Have an Account?</Link>
             </Button>
           </div>

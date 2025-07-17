@@ -8,6 +8,9 @@ import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
 import { Supervisors } from "./pages/Supervisors";
 import { FieldOfficers } from "./pages/FieldOfficers";
+import { Privacy } from "./pages/Privacy";
+import { Terms } from "./pages/Terms";
+import { DataProtection } from "./pages/DataProtection";
 import { AdminSignup } from "./pages/AdminSignup";
 import { AdminSignin } from "./pages/AdminSignin";
 import { SupervisorSignup } from "./pages/SupervisorSignup";
@@ -28,6 +31,9 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/supervisors" element={<Supervisors />} />
           <Route path="/field-officers" element={<FieldOfficers />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/data-protection" element={<DataProtection />} />
           <Route path="/admin-signup" element={<AdminSignup />} />
           <Route path="/admin-signin" element={<AdminSignin />} />
           <Route path="/supervisor-signup" element={<SupervisorSignup />} />
