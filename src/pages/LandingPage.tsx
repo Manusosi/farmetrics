@@ -39,44 +39,48 @@ export function LandingPage() {
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Admin Portal Card */}
-            <Link to="/admin-signin">
-              <Button variant="portal" className="w-full">
+            <Card className="group hover:shadow-medium transition-all duration-300 border-primary/20">
+              <CardHeader className="pb-4">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="p-3 bg-primary/10 rounded-lg">
                     <Shield className="h-8 w-8 text-primary" />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-foreground">Admin Portal</h3>
-                  </div>
+                  <CardTitle className="text-xl">Admin Portal</CardTitle>
                 </div>
-                <p className="text-muted-foreground text-left">
+                <CardDescription className="text-base leading-relaxed">
                   Manage users, monitor farm operations, and analyze agricultural data across all regions.
-                </p>
-                <div className="mt-4 text-primary font-medium">
-                  Access Admin Dashboard →
-                </div>
-              </Button>
-            </Link>
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button variant="default" size="lg" className="w-full" asChild>
+                  <Link to="/admin-signin">
+                    Access Admin Dashboard →
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
 
             {/* Supervisor Portal Card */}
-            <Link to="/supervisor-signin">
-              <Button variant="portal" className="w-full">
+            <Card className="group hover:shadow-medium transition-all duration-300 border-secondary/20">
+              <CardHeader className="pb-4">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="p-3 bg-secondary/10 rounded-lg">
                     <Users className="h-8 w-8 text-secondary" />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-foreground">Supervisor Portal</h3>
-                  </div>
+                  <CardTitle className="text-xl">Supervisor Portal</CardTitle>
                 </div>
-                <p className="text-muted-foreground text-left">
+                <CardDescription className="text-base leading-relaxed">
                   Coordinate field teams, manage regional operations, and track farm activities in your area.
-                </p>
-                <div className="mt-4 text-primary font-medium">
-                  Access Supervisor Dashboard →
-                </div>
-              </Button>
-            </Link>
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Button variant="outline" size="lg" className="w-full" asChild>
+                  <Link to="/supervisor-signin">
+                    Access Supervisor Dashboard →
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
