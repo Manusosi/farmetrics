@@ -3,13 +3,22 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Layout } from '@/components/common/Layout';
 import { Shield, Users, Sprout, TrendingUp, MapPin, BarChart } from 'lucide-react';
+import cocoaFarmerBg from '@/assets/cocoa-farmer-bg.jpg';
 
 export function LandingPage() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="bg-gradient-hero py-20 lg:py-32">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-gradient-hero py-20 lg:py-32 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          style={{ backgroundImage: `url(${cocoaFarmerBg})` }}
+        />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-hero" />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6">
               Agricultural Data Monitoring
@@ -198,7 +207,7 @@ export function LandingPage() {
             <Button variant="secondary" size="xl" asChild>
               <Link to="/admin-signup">Create Admin Account</Link>
             </Button>
-            <Button variant="outline" size="xl" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" asChild>
+            <Button variant="secondary" size="xl" asChild>
               <Link to="/supervisor-signup">Join as Supervisor</Link>
             </Button>
           </div>

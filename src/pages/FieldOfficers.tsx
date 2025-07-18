@@ -2,13 +2,22 @@ import { Layout } from '@/components/common/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Smartphone, MapPin, Camera, Navigation, Download, QrCode } from 'lucide-react';
+import citrusOrchardBg from '@/assets/citrus-orchard-bg.jpg';
 
 export function FieldOfficers() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="bg-gradient-hero py-20 lg:py-32">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative bg-gradient-hero py-20 lg:py-32 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          style={{ backgroundImage: `url(${citrusOrchardBg})` }}
+        />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-hero" />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl lg:text-6xl font-bold text-foreground mb-6">
               Field Officers
@@ -234,7 +243,7 @@ export function FieldOfficers() {
             <Button variant="secondary" size="xl">
               Technical Support
             </Button>
-            <Button variant="outline" size="xl" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+            <Button variant="secondary" size="xl">
               Training Resources
             </Button>
           </div>
