@@ -2,7 +2,7 @@ import { Layout } from '@/components/common/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Smartphone, MapPin, Camera, Navigation, Download, QrCode } from 'lucide-react';
-import citrusOrchardBg from '@/assets/citrus-orchard-bg.jpg';
+import citrusBackground from '/videos/citrus-orchard-placeholder.jpg';
 
 export function FieldOfficers() {
   return (
@@ -10,25 +10,12 @@ export function FieldOfficers() {
       {/* Hero Section */}
       <section className="relative bg-gradient-hero py-20 lg:py-32 overflow-hidden">
         {/* Background Video/Image */}
-        <div className="absolute inset-0">
-          {/* Placeholder for video - replace with actual video when available */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 animate-pulse"
-            style={{ backgroundImage: `url(/videos/citrus-orchard-placeholder.jpg)` }}
-          />
-          {/* Video element for future implementation */}
-          {/* <video 
-            className="absolute inset-0 w-full h-full object-cover opacity-30"
-            autoPlay 
-            muted 
-            loop 
-            playsInline
-          >
-            <source src="/videos/citrus-orchard.mp4" type="video/mp4" />
-          </video> */}
-        </div>
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 scale-105 animate-pulse"
+          style={{ backgroundImage: `url(${citrusBackground})` }}
+        />
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-hero" />
+        <div className="absolute inset-0 bg-gradient-hero/80" />
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">

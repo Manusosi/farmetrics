@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Layout } from '@/components/common/Layout';
 import { Shield, Users, Sprout, TrendingUp, MapPin, BarChart } from 'lucide-react';
-import cocoaFarmerBg from '@/assets/cocoa-farmer-bg.jpg';
+import cocoaBackground from '/videos/cocoa-farming-placeholder.jpg';
 
 export function LandingPage() {
   return (
@@ -11,25 +11,12 @@ export function LandingPage() {
       {/* Hero Section */}
       <section className="relative bg-gradient-hero py-20 lg:py-32 overflow-hidden">
         {/* Background Video/Image */}
-        <div className="absolute inset-0">
-          {/* Placeholder for video - replace with actual video when available */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 animate-pulse"
-            style={{ backgroundImage: `url(/videos/cocoa-farming-placeholder.jpg)` }}
-          />
-          {/* Video element for future implementation */}
-          {/* <video 
-            className="absolute inset-0 w-full h-full object-cover opacity-30"
-            autoPlay 
-            muted 
-            loop 
-            playsInline
-          >
-            <source src="/videos/cocoa-farmer.mp4" type="video/mp4" />
-          </video> */}
-        </div>
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 scale-105 animate-pulse"
+          style={{ backgroundImage: `url(${cocoaBackground})` }}
+        />
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-hero" />
+        <div className="absolute inset-0 bg-gradient-hero/80" />
         
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
