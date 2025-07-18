@@ -9,11 +9,24 @@ export function FieldOfficers() {
     <Layout>
       {/* Hero Section */}
       <section className="relative bg-gradient-hero py-20 lg:py-32 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-          style={{ backgroundImage: `url(${citrusOrchardBg})` }}
-        />
+        {/* Background Video/Image */}
+        <div className="absolute inset-0">
+          {/* Placeholder for video - replace with actual video when available */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 animate-pulse"
+            style={{ backgroundImage: `url(/videos/citrus-orchard-placeholder.jpg)` }}
+          />
+          {/* Video element for future implementation */}
+          {/* <video 
+            className="absolute inset-0 w-full h-full object-cover opacity-30"
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+          >
+            <source src="/videos/citrus-orchard.mp4" type="video/mp4" />
+          </video> */}
+        </div>
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-hero" />
         

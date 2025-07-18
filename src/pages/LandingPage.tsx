@@ -10,11 +10,24 @@ export function LandingPage() {
     <Layout>
       {/* Hero Section */}
       <section className="relative bg-gradient-hero py-20 lg:py-32 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-          style={{ backgroundImage: `url(${cocoaFarmerBg})` }}
-        />
+        {/* Background Video/Image */}
+        <div className="absolute inset-0">
+          {/* Placeholder for video - replace with actual video when available */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 animate-pulse"
+            style={{ backgroundImage: `url(/videos/cocoa-farming-placeholder.jpg)` }}
+          />
+          {/* Video element for future implementation */}
+          {/* <video 
+            className="absolute inset-0 w-full h-full object-cover opacity-30"
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+          >
+            <source src="/videos/cocoa-farmer.mp4" type="video/mp4" />
+          </video> */}
+        </div>
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-hero" />
         
