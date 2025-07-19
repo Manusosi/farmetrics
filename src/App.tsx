@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@/components/theme-provider";
 import { LandingPage } from "./pages/LandingPage";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
@@ -15,33 +16,45 @@ import { AdminSignup } from "./pages/AdminSignup";
 import { AdminSignin } from "./pages/AdminSignin";
 import { SupervisorSignup } from "./pages/SupervisorSignup";
 import { SupervisorSignin } from "./pages/SupervisorSignin";
+import { FieldOfficerSignup } from "./pages/FieldOfficerSignup";
+import { AdminDashboard } from "./pages/AdminDashboard";
+import { SupervisorDashboard } from "./pages/SupervisorDashboard";
+import { FieldOfficerDashboard } from "./pages/FieldOfficerDashboard";
+import { Signin } from "./pages/Signin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/supervisors" element={<Supervisors />} />
-          <Route path="/field-officers" element={<FieldOfficers />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/data-protection" element={<DataProtection />} />
-          <Route path="/admin-signup" element={<AdminSignup />} />
-          <Route path="/admin-signin" element={<AdminSignin />} />
-          <Route path="/supervisor-signup" element={<SupervisorSignup />} />
-          <Route path="/supervisor-signin" element={<SupervisorSignin />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider defaultTheme="system" storageKey="farmetrics-ui-theme">
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/supervisors" element={<Supervisors />} />
+            <Route path="/field-officers" element={<FieldOfficers />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/data-protection" element={<DataProtection />} />
+            <Route path="/admin-signup" element={<AdminSignup />} />
+            <Route path="/admin-signin" element={<AdminSignin />} />
+            <Route path="/supervisor-signup" element={<SupervisorSignup />} />
+            <Route path="/supervisor-signin" element={<SupervisorSignin />} />
+            <Route path="/field-officer-signup" element={<FieldOfficerSignup />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/supervisor/dashboard" element={<SupervisorDashboard />} />
+            <Route path="/field-officer/dashboard" element={<FieldOfficerDashboard />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
