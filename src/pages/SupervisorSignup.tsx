@@ -58,7 +58,7 @@ export function SupervisorSignup() {
     setLoading(true);
 
     try {
-      const { error } = await signUp(formData.email, formData.password, {
+      const { data, error } = await signUp(formData.email, formData.password, {
         full_name: formData.fullName,
         phone_number: formData.phoneNumber,
         role: 'supervisor',
@@ -74,8 +74,11 @@ export function SupervisorSignup() {
           toast.error(error.message || 'Failed to create account');
         }
       } else {
-        toast.success('Account created successfully! Please check your email to verify your account.');
-        navigate('/supervisor-signin');
+        toast.success('Account created successfully! Redirecting to dashboard...');
+        // Redirect to dashboard after successful signup
+        setTimeout(() => {
+          navigate('/supervisor/dashboard');
+        }, 1500);
       }
     } catch (error) {
       toast.error('An unexpected error occurred');

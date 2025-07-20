@@ -36,7 +36,7 @@ export function AdminSignup() {
     setLoading(true);
 
     try {
-      const { error } = await signUp(formData.email, formData.password, {
+      const { data, error } = await signUp(formData.email, formData.password, {
         full_name: formData.fullName,
         role: 'admin',
       });
@@ -48,8 +48,11 @@ export function AdminSignup() {
           toast.error(error.message || 'Failed to create account');
         }
       } else {
-        toast.success('Account created successfully! Please check your email to verify your account.');
-        navigate('/admin-signin');
+        toast.success('Account created successfully! Redirecting to dashboard...');
+        // Redirect to dashboard after successful signup
+        setTimeout(() => {
+          navigate('/admin/dashboard');
+        }, 1500);
       }
     } catch (error) {
       toast.error('An unexpected error occurred');

@@ -186,19 +186,28 @@ export function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-primary">
+      <section className="py-20 bg-gradient-to-br from-emerald-500 to-emerald-600">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-6">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
             Ready to Get Started?
           </h2>
-          <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Join thousands of agricultural professionals using Farmetrics to improve farm management and data collection.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="xl" asChild>
+            <Button 
+              className="bg-slate-700 hover:bg-slate-800 text-white border-0"
+              size="xl" 
+              asChild
+            >
               <Link to="/admin-signup">Create Admin Account</Link>
             </Button>
-            <Button variant="outline" size="xl" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" asChild>
+            <Button 
+              variant="outline" 
+              size="xl" 
+              className="border-white text-white hover:bg-white hover:text-emerald-600 bg-transparent" 
+              asChild
+            >
               <Link to="/supervisor-signup">Join as Supervisor</Link>
             </Button>
           </div>

@@ -221,20 +221,27 @@ export function FieldOfficers() {
       </section>
 
       {/* Support Section */}
-      <section className="py-20 bg-gradient-primary">
+      <section className="py-20 bg-gradient-to-br from-emerald-500 to-emerald-600">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-6">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
             Need Support?
           </h2>
-          <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Field officers can contact their regional supervisors or administrators for technical support, 
             training, or assistance with the mobile application.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="xl">
+            <Button 
+              className="bg-slate-700 hover:bg-slate-800 text-white border-0"
+              size="xl"
+            >
               Technical Support
             </Button>
-            <Button variant="outline" size="xl" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+            <Button 
+              variant="outline" 
+              size="xl" 
+              className="border-white text-white hover:bg-white hover:text-emerald-600 bg-transparent"
+            >
               Training Resources
             </Button>
           </div>
