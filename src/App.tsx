@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ScrollToTop } from "@/components/common/ScrollToTop";
+import { PageTransition } from "@/components/common/PageTransition";
 import { LandingPage } from "./pages/LandingPage";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
@@ -32,25 +34,26 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/supervisors" element={<Supervisors />} />
-            <Route path="/field-officers" element={<FieldOfficers />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/data-protection" element={<DataProtection />} />
-            <Route path="/admin-signup" element={<AdminSignup />} />
-            <Route path="/admin-signin" element={<AdminSignin />} />
-            <Route path="/supervisor-signup" element={<SupervisorSignup />} />
-            <Route path="/supervisor-signin" element={<SupervisorSignin />} />
-            <Route path="/field-officer-signup" element={<FieldOfficerSignup />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/supervisor/dashboard" element={<SupervisorDashboard />} />
-            <Route path="/field-officer/dashboard" element={<FieldOfficerDashboard />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+            <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+            <Route path="/supervisors" element={<PageTransition><Supervisors /></PageTransition>} />
+            <Route path="/field-officers" element={<PageTransition><FieldOfficers /></PageTransition>} />
+            <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
+            <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
+            <Route path="/data-protection" element={<PageTransition><DataProtection /></PageTransition>} />
+            <Route path="/admin-signup" element={<PageTransition><AdminSignup /></PageTransition>} />
+            <Route path="/admin-signin" element={<PageTransition><AdminSignin /></PageTransition>} />
+            <Route path="/supervisor-signup" element={<PageTransition><SupervisorSignup /></PageTransition>} />
+            <Route path="/supervisor-signin" element={<PageTransition><SupervisorSignin /></PageTransition>} />
+            <Route path="/field-officer-signup" element={<PageTransition><FieldOfficerSignup /></PageTransition>} />
+            <Route path="/signin" element={<PageTransition><Signin /></PageTransition>} />
+            <Route path="/admin/dashboard" element={<PageTransition><AdminDashboard /></PageTransition>} />
+            <Route path="/supervisor/dashboard" element={<PageTransition><SupervisorDashboard /></PageTransition>} />
+            <Route path="/field-officer/dashboard" element={<PageTransition><FieldOfficerDashboard /></PageTransition>} />
+            <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
