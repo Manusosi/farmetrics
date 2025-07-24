@@ -77,7 +77,7 @@ export function SupervisorSignup() {
         toast.success('Account created successfully! Redirecting to dashboard...');
         // Redirect to dashboard after successful signup
         setTimeout(() => {
-          navigate('/supervisor/dashboard');
+          navigate('/supervisor-dashboard');
         }, 1500);
       }
     } catch (error) {

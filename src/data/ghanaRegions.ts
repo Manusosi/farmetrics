@@ -183,7 +183,7 @@ export const ghanaRegions = {
     'Lawra Municipal',
     'Nandom Municipal'
   ],
-  'Brong Ahafo': [
+  'Bono': [
     'Sunyani Municipal',
     'Sunyani West',
     'Dormaa Central Municipal',
@@ -192,27 +192,111 @@ export const ghanaRegions = {
     'Berekum Municipal',
     'Jaman South Municipal',
     'Jaman North',
-    'Tano South Municipal',
-    'Tano North',
-    'Asunafo South Municipal',
-    'Asunafo North Municipal',
-    'Asutifi North',
-    'Asutifi South Municipal',
-    'Atebubu-Amantin Municipal',
-    'Sene West',
-    'Sene East Municipal',
+    'Tain',
+    'Wenchi Municipal'
+  ],
+  'Bono East': [
     'Techiman Municipal',
     'Techiman North',
     'Nkoranza South Municipal',
     'Nkoranza North',
     'Kintampo North Municipal',
     'Kintampo South',
-    'Wenchi Municipal',
-    'Tain',
-    'Banda'
+    'Atebubu-Amantin Municipal',
+    'Sene West',
+    'Sene East Municipal',
+    'Pru East',
+    'Pru West'
+  ],
+  'Ahafo': [
+    'Tano South Municipal',
+    'Tano North',
+    'Asunafo South Municipal',
+    'Asunafo North Municipal',
+    'Asutifi North',
+    'Asutifi South Municipal'
+  ],
+  'Western North': [
+    'Sefwi Wiawso Municipal',
+    'Bibiani Anhwiaso Bekwai Municipal',
+    'Sefwi Akontombra',
+    'Juaboso',
+    'Bia East',
+    'Bia West',
+    'Bodi',
+    'Suaman'
+  ],
+  'Savannah': [
+    'Damongo',
+    'Central Gonja',
+    'East Gonja Municipal',
+    'West Gonja',
+    'North Gonja',
+    'Sawla-Tuna-Kalba',
+    'Bole'
+  ],
+  'North East': [
+    'Nalerigu/Gambaga',
+    'West Mamprusi Municipal',
+    'East Mamprusi Municipal',
+    'Mamprugu Moagduri',
+    'Bunkpurugu-Nyankpanduri',
+    'Yunyoo-Nasuan'
+  ],
+  'Oti': [
+    'Krachi East Municipal',
+    'Krachi West',
+    'Krachi Nchumuru',
+    'Nkwanta South Municipal',
+    'Nkwanta North',
+    'Kadjebi',
+    'Jasikan',
+    'Biakoye',
+    'Guan'
   ]
 };
 
+// Get districts based on region
 export const getDistricts = (region: string): string[] => {
   return ghanaRegions[region as keyof typeof ghanaRegions] || [];
+};
+
+// A database of known locations organized by district for autocompletion
+export const knownLocations: Record<string, string[]> = {
+  'Accra Metropolitan': ['Adabraka', 'Jamestown', 'Osu', 'Cantonments', 'Ridge', 'Ministries', 'Christiansborg', 'Tudu', 'Makola', 'Chorkor', 'Labadi', 'Korle Gonno'],
+  'Kumasi Metropolitan': ['Adum', 'Bantama', 'Asokwa', 'Manhyia', 'Asafo', 'Nhyiaeso', 'Oforikrom', 'Subin', 'Tafo'],
+  'Sekondi-Takoradi Metropolitan': ['Sekondi', 'Takoradi', 'Kwesimintsim', 'Effia', 'Effiakuma', 'New Takoradi', 'Anaji'],
+  'Cape Coast Metropolitan': ['Cape Coast', 'Abura', 'Pedu', 'Amamoma', 'Apewosika', 'Essuekyir', 'Kakumdo'],
+  'Tamale Metropolitan': ['Tamale Central', 'Tamale North', 'Tamale South', 'Lamashegu', 'Nyohini', 'Vitting', 'Zogbeli'],
+  'Ho Municipal': ['Ho Central', 'Dome', 'Bankoe', 'Hliha', 'Ahoe', 'Kpodzi', 'Anagokordzi'],
+  'Wa Municipal': ['Wa Central', 'Kambali', 'Konta', 'Danko', 'Mangu', 'Sokpayiri', 'Kabanye']
+};
+
+// Search for locations based on input
+export const searchLocations = (district: string, input: string): string[] => {
+  if (!input.trim()) return [];
+  
+  const districtLocations = knownLocations[district] || [];
+  return districtLocations.filter(location => 
+    location.toLowerCase().includes(input.toLowerCase())
+  );
+};
+
+// Check if a location exists in our database
+export const locationExists = (district: string, location: string): boolean => {
+  const districtLocations = knownLocations[district] || [];
+  return districtLocations.some(existingLocation => 
+    existingLocation.toLowerCase() === location.toLowerCase()
+  );
+};
+
+// Add a new location to the database (would connect to backend in real app)
+export const addLocation = (district: string, location: string): void => {
+  if (!knownLocations[district]) {
+    knownLocations[district] = [];
+  }
+  
+  if (!locationExists(district, location)) {
+    knownLocations[district].push(location);
+  }
 };

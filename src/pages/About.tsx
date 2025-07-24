@@ -81,7 +81,7 @@ export function About() {
               How Farmetrics Works
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              A comprehensive ecosystem connecting field officers, supervisors, and administrators
+              A comprehensive ecosystem connecting regional supervisors and administrators
             </p>
           </div>
 
@@ -95,7 +95,7 @@ export function About() {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-base leading-relaxed">
-                  Field officers use our mobile app to visit farms, collect GPS coordinates, 
+                  Supervisors use our mobile app to visit farms, collect GPS coordinates, 
                   capture geotagged photos, and record detailed farm information including 
                   crop types and polygon boundaries.
                 </CardDescription>

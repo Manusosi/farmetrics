@@ -107,7 +107,7 @@ export function Signin() {
                     Sign up as Supervisor
                   </Link>
                   <Link to="/field-officer-signup" className="text-primary hover:underline text-sm">
-                    Sign up as Field Officer
+                    Sign up as Supervisor
                   </Link>
                 </div>
               </div>

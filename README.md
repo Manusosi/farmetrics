@@ -1,73 +1,203 @@
-# Welcome to your Lovable project
+# Farmetrics - Agricultural Data Management System
 
-## Project info
+A comprehensive web application for managing agricultural data collection in Ghana, designed for admins and supervisors to oversee field operations and data quality.
 
-**URL**: https://lovable.dev/projects/0384af9b-1f48-4269-bf62-1ca2327b4ab3
+## 🚀 Project Overview
 
-## How can I edit this code?
+Farmetrics is a production-ready agricultural monitoring platform that enables:
+- **Admin Dashboard**: Complete system oversight and management
+- **Supervisor Portal**: Regional farm and field officer management  
+- **APK Management**: Mobile app distribution for field officers
+- **Data Collection**: Real-time agricultural data from field operations
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: TailwindCSS, shadcn/ui components
+- **Backend**: Supabase (PostgreSQL, Authentication, Storage)
+- **Charts**: Recharts
+- **Maps**: Leaflet.js
+- **State Management**: React Query
+- **Routing**: React Router v6
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/0384af9b-1f48-4269-bf62-1ca2327b4ab3) and start prompting.
+## 📋 Implementation Status
 
-Changes made via Lovable will be committed automatically to this repo.
+### ✅ **Completed Features**
 
-**Use your preferred IDE**
+#### Authentication & Security
+- [x] **Multi-role authentication system** (Admin, Supervisor, Field Officer)
+- [x] **Row Level Security (RLS)** policies for data protection
+- [x] **PKCE authentication flow** for enhanced security
+- [x] **Protected routes** with role-based access control
+- [x] **Session management** with automatic token refresh
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+#### Admin Dashboard
+- [x] **Real-time statistics dashboard** with live data
+- [x] **Field officer management** with approval workflows
+- [x] **Farm management** with approval system
+- [x] **Visit tracking and reporting** with performance metrics
+- [x] **APK management system** for mobile app distribution
+- [x] **Geographic data visualization** with farm polygons
+- [x] **Activity monitoring** and system logs
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+#### Data Management
+- [x] **Farm polygon capture** and storage (GeoJSON)
+- [x] **EXIF metadata extraction** from field photos
+- [x] **Media storage** with Supabase buckets
+- [x] **Visit progress tracking** with completion rates
+- [x] **Issue reporting system** with status tracking
+- [x] **Real-time data synchronization**
 
-Follow these steps:
+#### User Interfaces
+- [x] **Responsive design** for all screen sizes
+- [x] **Dark/light theme support**
+- [x] **Mobile-first APK download page**
+- [x] **Professional admin interface**
+- [x] **Intuitive navigation** and layout
+- [x] **Loading state optimization**
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+#### Database Schema
+- [x] **Complete database structure** with all required tables
+- [x] **Foreign key relationships** properly configured
+- [x] **Data validation** and constraints
+- [x] **Migration system** for schema updates
+- [x] **Backup and recovery** considerations
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 🔄 **In Progress**
 
-# Step 3: Install the necessary dependencies.
-npm i
+#### Data Export System
+- [ ] **Excel export** functionality for reports
+- [ ] **PDF generation** for stakeholder reports
+- [ ] **CSV export** for data analysis
+- [ ] **Custom report builders**
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+#### Mobile Integration APIs
+- [ ] **Farmer/farm submission endpoints** for mobile app
+- [ ] **Visit data synchronization** APIs
+- [ ] **Issue reporting** mobile endpoints
+- [ ] **Offline data sync** capabilities
+
+### 📅 **Planned Features**
+
+#### Analytics & Reporting
+- [ ] **Advanced analytics dashboard**
+- [ ] **Regional comparison reports**
+- [ ] **Crop yield analysis**
+- [ ] **Performance benchmarking**
+
+#### System Optimization
+- [ ] **Database query optimization**
+- [ ] **Caching implementation**
+- [ ] **Performance monitoring**
+- [ ] **Error tracking system**
+
+## 🚦 **Getting Started**
+
+### Prerequisites
+- Node.js 18+ and npm
+- Supabase account and project
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd farmetrics
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   Create a `.env` file in the root directory:
+   ```env
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   VITE_APP_NAME=Farmetrics
+   VITE_SESSION_TIMEOUT=480
+   ```
+
+4. **Database Setup**
+   - Run the migration files in `supabase/migrations/`
+   - Set up Row Level Security policies
+   - Create storage buckets for media and APK files
+
+5. **Start Development Server**
+   ```bash
+   npm run dev
+   ```
+
+## 📁 **Project Structure**
+
+```
+src/
+├── components/           # Reusable UI components
+│   ├── admin/           # Admin-specific components
+│   ├── auth/            # Authentication components
+│   ├── common/          # Shared layout components
+│   ├── maps/            # Map visualization components
+│   └── ui/              # Base UI components (shadcn/ui)
+├── hooks/               # Custom React hooks
+├── integrations/        # Third-party integrations
+│   └── supabase/        # Supabase client and types
+├── pages/               # Page components
+│   ├── admin/           # Admin dashboard pages
+│   └── [public pages]   # Public pages
+├── services/            # Business logic and API calls
+└── lib/                 # Utility functions
 ```
 
-**Edit a file directly in GitHub**
+## 🔑 **Key Features Implemented**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### APK Management System
+- **Upload Management**: Secure APK file uploads for admins
+- **Version Control**: Activate/deactivate APK versions
+- **Download Tracking**: Monitor download statistics
+- **Public Distribution**: Field officer download page
 
-**Use GitHub Codespaces**
+### Field Officer Management
+- **Account Approval**: Admin approval workflow for new officers
+- **Performance Tracking**: Visit completion and progress monitoring
+- **Regional Assignment**: Geographic assignment management
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Farm & Visit Management
+- **Farm Registration**: Complete farm data with polygon coordinates
+- **Visit Tracking**: Multi-cycle visit progress monitoring
+- **Data Quality**: EXIF metadata validation and GPS verification
 
-## What technologies are used for this project?
+## 🛡️ **Security Implementation**
 
-This project is built with:
+- **Row Level Security**: Database-level access control
+- **Role-based Authentication**: Admin, Supervisor, Field Officer roles
+- **Secure File Storage**: Protected APK and media storage
+- **API Security**: Authenticated endpoints with proper authorization
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📊 **Performance Optimizations**
 
-## How can I deploy this project?
+- **Reduced Loading States**: Minimized loading indicators
+- **Lazy Loading**: Component-based code splitting
+- **Optimized Queries**: Efficient database queries
+- **Caching Strategy**: Smart data caching implementation
 
-Simply open [Lovable](https://lovable.dev/projects/0384af9b-1f48-4269-bf62-1ca2327b4ab3) and click on Share -> Publish.
+## 🤝 **Contributing**
 
-## Can I connect a custom domain to my Lovable project?
+This is a production system with specific requirements. All changes should be:
+1. Tested thoroughly
+2. Documented properly
+3. Approved by stakeholders
+4. Deployed through proper channels
 
-Yes, you can!
+## 📞 **Support**
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+For technical support or questions about the system:
+- Contact the development team
+- Review the inline documentation
+- Check the Supabase dashboard for real-time issues
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
+
+**Status**: Production Ready ✅  
+**Last Updated**: January 2025  
+**Version**: 1.0.0

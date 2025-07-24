@@ -14,6 +14,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      apk_files: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          download_count: number | null
+          file_path: string
+          file_size: number | null
+          filename: string
+          id: string
+          is_active: boolean | null
+          updated_at: string | null
+          uploaded_by: string | null
+          version: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          download_count?: number | null
+          file_path: string
+          file_size?: number | null
+          filename: string
+          id?: string
+          is_active?: boolean | null
+          updated_at?: string | null
+          uploaded_by?: string | null
+          version: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          download_count?: number | null
+          file_path?: string
+          file_size?: number | null
+          filename?: string
+          id?: string
+          is_active?: boolean | null
+          updated_at?: string | null
+          uploaded_by?: string | null
+          version?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "apk_files_uploaded_by_fkey"
+            columns: ["uploaded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       farmers: {
         Row: {
           created_at: string
@@ -54,13 +104,16 @@ export type Database = {
           crop_type: string
           district: string
           farm_name: string
+          farm_size_approx: number | null
           farmer_id: string
+          humidity: number | null
           id: string
           is_approved: boolean
           last_visit_date: string | null
           location: string | null
           polygon_coordinates: Json | null
           region: string
+          soil_type: string | null
           total_area: number | null
           updated_at: string
           visit_count: number
@@ -71,13 +124,16 @@ export type Database = {
           crop_type: string
           district: string
           farm_name: string
+          farm_size_approx?: number | null
           farmer_id: string
+          humidity?: number | null
           id?: string
           is_approved?: boolean
           last_visit_date?: string | null
           location?: string | null
           polygon_coordinates?: Json | null
           region: string
+          soil_type?: string | null
           total_area?: number | null
           updated_at?: string
           visit_count?: number
@@ -88,13 +144,16 @@ export type Database = {
           crop_type?: string
           district?: string
           farm_name?: string
+          farm_size_approx?: number | null
           farmer_id?: string
+          humidity?: number | null
           id?: string
           is_approved?: boolean
           last_visit_date?: string | null
           location?: string | null
           polygon_coordinates?: Json | null
           region?: string
+          soil_type?: string | null
           total_area?: number | null
           updated_at?: string
           visit_count?: number
@@ -180,11 +239,93 @@ export type Database = {
           },
         ]
       }
+      notification_preferences: {
+        Row: {
+          created_at: string | null
+          dashboard_enabled: boolean | null
+          email_enabled: boolean | null
+          email_frequency: string | null
+          id: string
+          preferences: Json | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          dashboard_enabled?: boolean | null
+          email_enabled?: boolean | null
+          email_frequency?: string | null
+          id?: string
+          preferences?: Json | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          dashboard_enabled?: boolean | null
+          email_enabled?: boolean | null
+          email_frequency?: string | null
+          id?: string
+          preferences?: Json | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          action_url: string | null
+          created_at: string | null
+          expires_at: string | null
+          id: string
+          is_read: boolean | null
+          message: string
+          metadata: Json | null
+          priority: string
+          read_at: string | null
+          title: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          action_url?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message: string
+          metadata?: Json | null
+          priority?: string
+          read_at?: string | null
+          title: string
+          type: string
+          user_id?: string | null
+        }
+        Update: {
+          action_url?: string | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message?: string
+          metadata?: Json | null
+          priority?: string
+          read_at?: string | null
+          title?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          account_status: string | null
+          approved_at: string | null
+          approved_by: string | null
           created_at: string
           district: string | null
           full_name: string
+          gender: string | null
           id: string
           is_active: boolean
           location: string | null
@@ -195,9 +336,13 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          account_status?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
           created_at?: string
           district?: string | null
           full_name: string
+          gender?: string | null
           id?: string
           is_active?: boolean
           location?: string | null
@@ -208,9 +353,13 @@ export type Database = {
           user_id: string
         }
         Update: {
+          account_status?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
           created_at?: string
           district?: string | null
           full_name?: string
+          gender?: string | null
           id?: string
           is_active?: boolean
           location?: string | null
@@ -220,7 +369,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       transfers: {
         Row: {
@@ -331,39 +488,72 @@ export type Database = {
           approved_by: string | null
           coordinates: Json | null
           created_at: string
+          crop_type: string | null
+          farm_health: string | null
           farm_id: string
+          farmer_cooperation: string | null
+          humidity: number | null
           id: string
           is_approved: boolean
           notes: string | null
           officer_id: string
+          pests: string[] | null
+          soil_type: string | null
+          status: string | null
+          tree_count: number | null
+          tree_species: string[] | null
+          visit_cycle: number | null
           visit_date: string
           visit_number: number
+          visit_type: string | null
         }
         Insert: {
           approved_at?: string | null
           approved_by?: string | null
           coordinates?: Json | null
           created_at?: string
+          crop_type?: string | null
+          farm_health?: string | null
           farm_id: string
+          farmer_cooperation?: string | null
+          humidity?: number | null
           id?: string
           is_approved?: boolean
           notes?: string | null
           officer_id: string
+          pests?: string[] | null
+          soil_type?: string | null
+          status?: string | null
+          tree_count?: number | null
+          tree_species?: string[] | null
+          visit_cycle?: number | null
           visit_date?: string
           visit_number: number
+          visit_type?: string | null
         }
         Update: {
           approved_at?: string | null
           approved_by?: string | null
           coordinates?: Json | null
           created_at?: string
+          crop_type?: string | null
+          farm_health?: string | null
           farm_id?: string
+          farmer_cooperation?: string | null
+          humidity?: number | null
           id?: string
           is_approved?: boolean
           notes?: string | null
           officer_id?: string
+          pests?: string[] | null
+          soil_type?: string | null
+          status?: string | null
+          tree_count?: number | null
+          tree_species?: string[] | null
+          visit_cycle?: number | null
           visit_date?: string
           visit_number?: number
+          visit_type?: string | null
         }
         Relationships: [
           {

@@ -1,9 +1,97 @@
+import { useState, useEffect } from 'react';
 import { Layout } from '@/components/common/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Smartphone, MapPin, Camera, Navigation, Download, QrCode } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Smartphone, MapPin, Camera, Navigation, Download, QrCode, Calendar, FileText } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { format } from 'date-fns';
+
+interface APKFile {
+  id: string;
+  filename: string;
+  version: string;
+  description?: string | null;
+  file_path: string;
+  file_size?: number | null;
+  download_count: number | null;
+  created_at: string | null;
+}
 
 export function FieldOfficers() {
+  const [activeAPK, setActiveAPK] = useState<APKFile | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [downloading, setDownloading] = useState(false);
+
+  // Fetch active APK
+  useEffect(() => {
+    const fetchActiveAPK = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('apk_files')
+          .select('*')
+          .eq('is_active', true)
+          .single();
+
+        if (error && error.code !== 'PGRST116') {
+          console.error('Error fetching active APK:', error);
+        } else if (data) {
+          setActiveAPK(data);
+        }
+      } catch (error) {
+        console.error('Error fetching active APK:', error);
+      }
+      setLoading(false);
+    };
+
+    fetchActiveAPK();
+  }, []);
+
+  // Handle APK download
+  const handleDownload = async () => {
+    if (!activeAPK) return;
+
+    setDownloading(true);
+    try {
+      // Get signed URL for download
+      const { data, error } = await supabase.storage
+        .from('apk-files')
+        .createSignedUrl(activeAPK.file_path, 3600); // 1 hour expiry
+
+      if (error) throw error;
+
+      if (data?.signedUrl) {
+        // Increment download count
+        await supabase
+          .from('apk_files')
+          .update({ download_count: (activeAPK.download_count || 0) + 1 })
+          .eq('id', activeAPK.id);
+
+        // Trigger download
+        const link = document.createElement('a');
+        link.href = data.signedUrl;
+        link.download = activeAPK.filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        toast.success('Download started!');
+      }
+    } catch (error: any) {
+      console.error('Download error:', error);
+      toast.error('Download failed. Please try again.');
+    }
+    setDownloading(false);
+  };
+
+  // Format file size
+  const formatFileSize = (bytes?: number) => {
+    if (!bytes) return 'Unknown size';
+    const mb = bytes / (1024 * 1024);
+    return `${mb.toFixed(1)} MB`;
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -106,17 +194,74 @@ export function FieldOfficers() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="text-center space-y-6">
-                  <div className="p-6 bg-muted/50 rounded-lg">
-                    <QrCode className="h-24 w-24 text-muted-foreground mx-auto mb-4" />
-                    <p className="text-sm text-muted-foreground">
-                      Scan QR code to download the APK file
-                    </p>
-                  </div>
-                  
-                  <Button size="lg" className="w-full">
-                    <Download className="h-5 w-5 mr-2" />
-                    Download APK
-                  </Button>
+                  {loading ? (
+                    <div className="p-6 bg-muted/50 rounded-lg">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto"></div>
+                    </div>
+                  ) : activeAPK ? (
+                    <>
+                      <div className="p-6 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800">
+                        <div className="flex items-center justify-center gap-2 mb-4">
+                          <Smartphone className="h-8 w-8 text-green-600" />
+                          <Badge variant="secondary" className="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
+                            v{activeAPK.version}
+                          </Badge>
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex items-center justify-center gap-4 text-muted-foreground">
+                            <div className="flex items-center gap-1">
+                              <FileText className="h-4 w-4" />
+                              {formatFileSize(activeAPK.file_size)}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Download className="h-4 w-4" />
+                              {activeAPK.download_count || 0} downloads
+                            </div>
+                          </div>
+                          {activeAPK.created_at && (
+                            <div className="flex items-center justify-center gap-1 text-muted-foreground">
+                              <Calendar className="h-4 w-4" />
+                              Updated {format(new Date(activeAPK.created_at), 'MMM d, yyyy')}
+                            </div>
+                          )}
+                        </div>
+                        {activeAPK.description && (
+                          <p className="text-sm text-muted-foreground mt-4 p-3 bg-background rounded border">
+                            {activeAPK.description}
+                          </p>
+                        )}
+                      </div>
+                      
+                      <Button 
+                        size="lg" 
+                        className="w-full"
+                        onClick={handleDownload}
+                        disabled={downloading}
+                      >
+                        {downloading ? (
+                          <>
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                            Downloading...
+                          </>
+                        ) : (
+                          <>
+                            <Download className="h-5 w-5 mr-2" />
+                            Download APK v{activeAPK.version}
+                          </>
+                        )}
+                      </Button>
+                    </>
+                  ) : (
+                    <div className="p-6 bg-muted/50 rounded-lg">
+                      <QrCode className="h-24 w-24 text-muted-foreground mx-auto mb-4" />
+                      <p className="text-sm text-muted-foreground mb-2">
+                        No APK available for download
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Please contact your administrator
+                      </p>
+                    </div>
+                  )}
                   
                   <div className="text-sm text-muted-foreground space-y-1">
                     <p>System Requirements:</p>

@@ -25,7 +25,7 @@ export function Terms() {
               <h2 className="text-2xl font-semibold text-foreground mb-4">Service Description</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Farmetrics is an agricultural data monitoring platform that enables administrators and 
-                supervisors to manage and monitor field data collected by field officers through our 
+                supervisors to manage and monitor field data collected through our 
                 mobile application. The platform provides tools for:
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-1">

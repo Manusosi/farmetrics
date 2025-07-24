@@ -8,6 +8,7 @@ import { Layout } from '@/components/common/Layout';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 import { Loader2, Shield } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 export function AdminSignin() {
   const [formData, setFormData] = useState({
@@ -15,18 +16,22 @@ export function AdminSignin() {
     password: '',
   });
   const [loading, setLoading] = useState(false);
-  const { signIn, user, profile } = useAuth();
+  const { signIn, signOut, user, profile } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
+    // If we have both user and profile data
     if (user && profile) {
       if (profile.role === 'admin') {
+        // Navigate to admin dashboard
         navigate('/admin-dashboard');
       } else {
         toast.error('Access denied. Admin privileges required.');
+        // Sign out if not admin
+        signOut?.();
       }
     }
-  }, [user, profile, navigate]);
+  }, [user, profile, navigate, signOut]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,12 +46,23 @@ export function AdminSignin() {
         } else {
           toast.error(error.message || 'Failed to sign in');
         }
+        setLoading(false);
       } else {
         toast.success('Signed in successfully!');
+        
+        // Check if we have user and profile data
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          // Force navigation after a short delay
+          setTimeout(() => {
+            navigate('/admin-dashboard');
+            setLoading(false);
+          }, 1000);
+        }
       }
     } catch (error) {
       toast.error('An unexpected error occurred');
-    } finally {
       setLoading(false);
     }
   };

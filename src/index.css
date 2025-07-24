@@ -133,3 +133,26 @@ All colors MUST be HSL. Following the PRD color scheme: Green (success), Dark Bl
     @apply bg-background text-foreground;
   }
 }
+
+/* Leaflet Map Styles */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.leaflet-popup-content-wrapper {
+  @apply bg-background border border-border shadow-lg rounded-lg;
+}
+
+.leaflet-popup-content {
+  @apply m-0;
+}
+
+.leaflet-popup-tip {
+  @apply bg-background border border-border;
+}
+
+.leaflet-container .leaflet-control-attribution {
+  @apply bg-background/80 text-xs;
+}

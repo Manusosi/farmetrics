@@ -2,16 +2,71 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_URL = "https://fxlklgnfskkdwqzveuhl.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4bGtsZ25mc2trZHdxenZldWhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI3MDI1NDgsImV4cCI6MjA2ODI3ODU0OH0.wEvE_8PrCZaisjeLKDFgL1zhHdKbN9FZwBkGYgvdYzE";
+// Get environment variables - NO FALLBACKS in production
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Import the supabase client like this:
-// import { supabase } from "@/integrations/supabase/client";
+// Validate environment variables
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  throw new Error(
+    'Missing required environment variables. Please ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set in your .env file.'
+  );
+}
 
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: {
-    storage: localStorage,
-    persistSession: true,
-    autoRefreshToken: true,
+// Additional validation for production
+if (SUPABASE_URL.includes('localhost') && import.meta.env.PROD) {
+  throw new Error('Production build cannot use localhost Supabase URL');
+}
+
+// Create Supabase client with secure configuration
+export const supabase = createClient<Database>(
+  SUPABASE_URL, 
+  SUPABASE_ANON_KEY, 
+  {
+    auth: {
+      // Store session in localStorage by default
+      storage: localStorage,
+      // Keep the session data even after closing the browser
+      persistSession: true,
+      // Automatically refresh the token before it expires
+      autoRefreshToken: true,
+      // Detect when localStorage becomes unavailable (e.g., in incognito mode)
+      detectSessionInUrl: true,
+      // Use PKCE flow for better security
+      flowType: 'pkce'
+    },
+    // Application identifier for monitoring
+    global: {
+      headers: { 'x-application-name': 'farmetrics' },
+    },
+    // Conservative reconnection strategy for mobile networks
+    realtime: {
+      params: {
+        eventsPerSecond: 10,
+      },
+    },
   }
-});
+);
+
+// Helper functions for session management
+export const isSessionValid = async () => {
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    return { isValid: !error && !!session, session, error };
+  } catch (error) {
+    return { isValid: false, session: null, error };
+  }
+};
+
+export const refreshSession = async () => {
+  try {
+    const { data, error } = await supabase.auth.refreshSession();
+    if (error) {
+      console.warn('Session refresh failed:', error.message);
+    }
+    return { data, error };
+  } catch (error) {
+    console.error('Session refresh error:', error);
+    return { data: null, error };
+  }
+};

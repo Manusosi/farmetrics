@@ -51,7 +51,7 @@ export function AdminSignup() {
         toast.success('Account created successfully! Redirecting to dashboard...');
         // Redirect to dashboard after successful signup
         setTimeout(() => {
-          navigate('/admin/dashboard');
+          navigate('/admin-dashboard');
         }, 1500);
       }
     } catch (error) {

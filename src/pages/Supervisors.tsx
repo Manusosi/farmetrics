@@ -20,7 +20,7 @@ export function Supervisors() {
             </p>
             <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto animate-fade-in">
               As a regional supervisor, you play a crucial role in Ghana's agricultural data collection system, 
-              overseeing field officers and maintaining data integrity across your assigned region.
+              collecting field data and maintaining data integrity across your assigned region.
             </p>
           </div>
         </div>
@@ -48,7 +48,7 @@ export function Supervisors() {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-base leading-relaxed">
-                  Oversee field officers in your region, assign farms, monitor performance, 
+                  Manage farms in your region, collect field data, monitor performance, 
                   and coordinate team activities to ensure efficient data collection operations.
                 </CardDescription>
               </CardContent>

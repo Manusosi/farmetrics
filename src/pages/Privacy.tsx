@@ -50,7 +50,7 @@ export function Privacy() {
               <ul className="list-disc list-inside text-muted-foreground space-y-2">
                 <li>To provide and maintain our agricultural monitoring services</li>
                 <li>To authenticate users and manage access controls</li>
-                <li>To facilitate communication between supervisors and field officers</li>
+                <li>To facilitate communication between administrators and regional supervisors</li>
                 <li>To generate reports and analytics for agricultural planning</li>
                 <li>To improve our platform and develop new features</li>
                 <li>To comply with legal obligations and regulatory requirements</li>
