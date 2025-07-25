@@ -151,7 +151,7 @@ export function useAuth() {
   const signUp = async (email: string, password: string, userData: Partial<Profile>) => {
     try {
       console.info('Creating new account...');
-      const redirectUrl = `${window.location.origin}/`;
+      const redirectUrl = `${window.location.origin}/auth/confirm`;
       
       const { data, error } = await supabase.auth.signUp({
         email,

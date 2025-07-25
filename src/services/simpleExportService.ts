@@ -160,30 +160,30 @@ class SimpleExportService {
           notes,
           is_approved,
           farms(farm_name, farmers(name)),
-          profiles(full_name)
+          officer:profiles!officer_id(full_name)
         `)
         .order('visit_date', { ascending: false });
 
       if (error) throw error;
 
-      const formattedData = data?.map(visit => ({
+      const csvData = data.map(visit => ({
         'Visit Date': new Date(visit.visit_date).toLocaleDateString(),
         'Visit #': visit.visit_number,
         'Farm': visit.farms?.farm_name || 'Unknown',
         'Farmer': visit.farms?.farmers?.name || 'Unknown',
-        'Officer': visit.profiles?.full_name || 'Unknown',
+        'Officer': visit.officer?.full_name || 'Unknown',
         'Crop Type': visit.crop_type || 'N/A',
         'Tree Count': visit.tree_count || 'N/A',
         'Farm Health': visit.farm_health || 'N/A',
         'Soil Type': visit.soil_type || 'N/A',
         'Humidity': visit.humidity || 'N/A',
         'Pests': visit.pests?.join(', ') || 'None',
-        'Status': visit.is_approved ? 'Approved' : 'Pending',
-        'Notes': visit.notes || 'None'
-      })) || [];
+        'Notes': visit.notes || 'N/A',
+        'Status': visit.is_approved ? 'Approved' : 'Pending'
+      }));
 
       await this.export({
-        data: formattedData,
+        data: csvData,
         filename: 'visits_export',
         format
       });
