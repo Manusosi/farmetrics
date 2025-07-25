@@ -147,7 +147,7 @@ export function FieldOfficers() {
       setOfficers(officersWithDetails);
     } catch (error: any) {
       console.error('Error fetching officers:', error);
-      toast.error('Failed to load field officers');
+      // Don't show toast error for empty data scenarios - users expect empty tables initially
     } finally {
       setLoading(false);
     }

@@ -118,14 +118,20 @@ export function AdminSupervisors() {
 
       if (error) {
         console.error('Error fetching supervisors:', error);
-        toast.error('Failed to load supervisors');
+        // Only show error for real connection issues, not missing data
+        if (error.message && !error.message.includes('No rows found')) {
+          toast.error('Failed to load supervisors');
+        }
         return;
       }
 
       setSupervisors(data || []);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching supervisors:', error);
-      toast.error('Failed to load supervisors');
+      // Only show error toast for real connection issues
+      if (error.message && !error.message.includes('No rows found') && error.code !== 'PGRST116') {
+        toast.error('Failed to load supervisors');
+      }
     }
     setLoading(false);
   };

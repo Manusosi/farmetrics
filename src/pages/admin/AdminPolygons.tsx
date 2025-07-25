@@ -121,7 +121,9 @@ export function AdminPolygons() {
           try {
             const coords = farm.polygon_coordinates as any;
             if (Array.isArray(coords) && coords.length > 0) {
-              coordinates = coords.map((coord: any) => 
+              // Handle nested array format [[[lat,lng],...]] or simple format [[lat,lng],...]
+              const coordArray = Array.isArray(coords[0]) && Array.isArray(coords[0][0]) ? coords[0] : coords;
+              coordinates = coordArray.map((coord: any) => 
                 Array.isArray(coord) && coord.length >= 2 
                   ? [coord[0], coord[1]] as [number, number]
                   : [0, 0] as [number, number]
@@ -143,9 +145,12 @@ export function AdminPolygons() {
 
       setMapPolygons(polygons);
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching farms:', error);
-      toast.error('Failed to load farm polygons');
+      // Only show error toast for actual database errors, not empty results
+      if (error.code !== 'PGRST116' && error.message !== 'No rows found') {
+        toast.error('Failed to load farm polygons');
+      }
     }
     setLoading(false);
   };
@@ -556,7 +561,9 @@ export function AdminPolygons() {
             <CardContent className="p-0">
               <div className="h-[70vh] min-h-[500px] w-full border-0 rounded-lg overflow-hidden">
                 <FarmMap
-                  polygons={mapPolygons}
+                  farms={farms}
+                  selectedFarm={selectedFarm}
+                  onFarmSelect={(farm) => farm ? handleFarmSelect(farm) : setSelectedFarm(null)}
                   className="h-full w-full"
                   centerOnPolygons={true}
                   drawingMode={false}

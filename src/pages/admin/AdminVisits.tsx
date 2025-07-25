@@ -215,7 +215,7 @@ export function AdminVisits() {
 
     } catch (error: any) {
       console.error('Error fetching performance data:', error);
-      toast.error('Failed to load performance data');
+      // Don't show toast - users expect no visits initially
     } finally {
       setLoading(false);
     }

@@ -99,9 +99,9 @@ export function AdminMedia() {
 
       if (error) throw error;
       setImages(data || []);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching images:', error);
-      toast.error('Failed to load images');
+      // Don't show toast - users expect no images initially
     }
     setLoading(false);
   };

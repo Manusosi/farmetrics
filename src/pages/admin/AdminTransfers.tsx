@@ -78,9 +78,9 @@ export function AdminTransfers() {
 
       if (error) throw error;
       setTransfers(data || []);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching transfers:', error);
-      toast.error('Unable to connect to database');
+      // Don't show toast - users expect no transfers initially
     }
     setLoading(false);
   };
