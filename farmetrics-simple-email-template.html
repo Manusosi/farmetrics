@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Confirm Your Farmetrics Account</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8fdf9;
+        color: #2d3748;
+        margin: 0;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .container {
+        background-color: #ffffff;
+        border-radius: 8px;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 40px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .logo {
+        font-size: 28px;
+        font-weight: bold;
+        color: #22c55e;
+        margin-bottom: 10px;
+      }
+      h2 {
+        color: #1f2937;
+        margin-bottom: 20px;
+        font-size: 24px;
+      }
+      p {
+        margin-bottom: 16px;
+        color: #4b5563;
+      }
+      .button {
+        display: inline-block;
+        margin: 25px 0;
+        padding: 14px 28px;
+        font-size: 16px;
+        font-weight: 600;
+        background-color: #22c55e;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+      }
+      .button:hover {
+        background-color: #16a34a;
+      }
+      .footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e5e7eb;
+        font-size: 12px;
+        color: #9ca3af;
+        text-align: center;
+        line-height: 1.4;
+      }
+      .code-box {
+        background-color: #f3f4f6;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 15px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: #1f2937;
+        margin: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">FARMETRICS</div>
+        <p style="color: #6b7280; margin: 0;">Smart Agriculture Management Platform</p>
+      </div>
+
+      <h2>Welcome to Farmetrics!</h2>
+      
+      <p>Hello there,</p>
+      
+      <p>Thank you for joining <strong>Farmetrics</strong>, Ghana's leading digital agriculture management platform.</p>
+      
+      <p>To activate your account and start your journey, please confirm your email address by clicking the button below:</p>
+      
+      <div style="text-align: center;">
+        <a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email" class="button">Confirm My Account</a>
+      </div>
+
+      <p>Alternatively, you can enter this confirmation code manually:</p>
+      
+      <div class="code-box">
+        {{ .Token }}
+      </div>
+
+      <p>If you didn't create this account, please ignore this email.</p>
+
+      <div class="footer">
+        <p>&copy; 2025 Farmetrics Cloud. All rights reserved.</p>
+        <p>You're receiving this email because you registered for a Farmetrics account.</p>
+      </div>
+    </div>
+  </body>
+</html> 

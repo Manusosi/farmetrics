@@ -116,9 +116,6 @@ export function Signin() {
                   <Link to="/supervisor-signup" className="text-primary hover:underline text-sm">
                     Sign up as Supervisor
                   </Link>
-                  <Link to="/field-officer-signup" className="text-primary hover:underline text-sm">
-                    Sign up as Supervisor
-                  </Link>
                 </div>
               </div>
             </CardContent>

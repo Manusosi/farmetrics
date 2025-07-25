@@ -26,6 +26,7 @@ import { AdminSignin } from './pages/AdminSignin';
 import { AdminSignup } from './pages/AdminSignup';
 import { SupervisorSignin } from './pages/SupervisorSignin';
 import { SupervisorSignup } from './pages/SupervisorSignup';
+import { Signin } from './pages/Signin';
 import EmailConfirmation from './pages/EmailConfirmation';
 import EmailConfirmationSuccess from './pages/EmailConfirmationSuccess';
 import AuthConfirm from './pages/AuthConfirm';
@@ -213,6 +214,7 @@ function App() {
                   <PageTransition><SupervisorSignin /></PageTransition>
               } />
               <Route path="/supervisor-signup" element={<PageTransition><SupervisorSignup /></PageTransition>} />
+              <Route path="/signin" element={<PageTransition><Signin /></PageTransition>} />
               
               {/* Email Confirmation Routes */}
               <Route path="/email-confirmation" element={<PageTransition><EmailConfirmation /></PageTransition>} />
