@@ -97,23 +97,22 @@ export function AdminDashboard() {
     }
 
     const fetchDashboardData = async () => {
-      console.log('Starting dashboard data fetch...');
-      setLoading(true);
-      setError(null);
-      setHasAttemptedLoad(true);
-      
-      // Clear any existing timeout
-      if (loadingTimeoutRef.current) {
-        window.clearTimeout(loadingTimeoutRef.current);
-      }
-      
-      // Set a timeout to handle cases where loading gets stuck
-      loadingTimeoutRef.current = window.setTimeout(() => {
-        setLoading(false);
-        setError("Request timed out. Please check your connection and try again.");
-      }, 15000); // Increased to 15 seconds
-      
       try {
+        setLoading(true);
+        setError(null);
+        setHasAttemptedLoad(true);
+        
+        // Clear any existing timeout
+        if (loadingTimeoutRef.current) {
+          window.clearTimeout(loadingTimeoutRef.current);
+        }
+        
+        // Set a timeout to handle cases where loading gets stuck
+        loadingTimeoutRef.current = window.setTimeout(() => {
+            setLoading(false);
+          setError("Request timed out. Please check your connection and try again.");
+        }, 15000); // Increased to 15 seconds
+        
         // Fetch data with independent error handling
         const [summaryResult, activityResult, polygonsResult, syncResult, weeklyResult] = await Promise.allSettled([
           getDashboardSummary(),
@@ -129,25 +128,25 @@ export function AdminDashboard() {
         } else {
           console.error('Failed to fetch summary:', summaryResult.reason);
         }
-
+        
         if (activityResult.status === 'fulfilled') {
           setRecentActivity(activityResult.value);
         } else {
           console.error('Failed to fetch activity:', activityResult.reason);
         }
-
+        
         if (polygonsResult.status === 'fulfilled') {
           setFarmPolygons(polygonsResult.value);
         } else {
           console.error('Failed to fetch polygons:', polygonsResult.reason);
         }
-
+        
         if (syncResult.status === 'fulfilled') {
           setSyncStatus(syncResult.value);
         } else {
           console.error('Failed to fetch sync status:', syncResult.reason);
         }
-
+        
         if (weeklyResult.status === 'fulfilled') {
           setWeeklyData(weeklyResult.value);
         } else {

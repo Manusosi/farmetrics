@@ -80,10 +80,8 @@ export const initializeStorageBuckets = async (): Promise<void> => {
           fileSizeLimit: 10 * 1024 * 1024 // 10MB limit
         });
 
-        if (createError) {
-          console.error(`Error creating bucket ${bucket.name}:`, createError);
-        } else {
-          console.log(`✅ Created storage bucket: ${bucket.name}`);
+        if (createError && !createError.message.includes('already exists')) {
+          throw createError;
         }
       }
     }
@@ -347,7 +345,5 @@ export const calculateDistance = (
  * Initialize media service
  */
 export const initializeMediaService = async (): Promise<void> => {
-  console.log('🚀 Initializing media service...');
   await initializeStorageBuckets();
-  console.log('✅ Media service initialized');
 }; 

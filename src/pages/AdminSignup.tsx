@@ -16,12 +16,44 @@ export function AdminSignup() {
     password: '',
     confirmPassword: '',
   });
+  const [emailError, setEmailError] = useState('');
   const [loading, setLoading] = useState(false);
   const { signUp } = useAuth();
   const navigate = useNavigate();
 
+  const validateEmail = (email: string) => {
+    if (email && !email.endsWith('@farmetrics.org')) {
+      setEmailError('Invalid email domain');
+      return false;
+    }
+    setEmailError('');
+    return true;
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const email = e.target.value;
+    setFormData({ ...formData, email });
+    
+    // Validate on blur or when user stops typing
+    if (email) {
+      validateEmail(email);
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const handleEmailBlur = () => {
+    validateEmail(formData.email);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate email domain for admin accounts
+    if (!formData.email.endsWith('@farmetrics.org')) {
+      toast.error('Admin accounts must use a @farmetrics.org email address');
+      return;
+    }
     
     if (formData.password !== formData.confirmPassword) {
       toast.error('Passwords do not match');
@@ -48,11 +80,9 @@ export function AdminSignup() {
           toast.error(error.message || 'Failed to create account');
         }
       } else {
-        toast.success('Account created successfully! Redirecting to dashboard...');
-        // Redirect to dashboard after successful signup
-        setTimeout(() => {
-          navigate('/admin-dashboard');
-        }, 1500);
+        toast.success('Account created successfully! Please check your email for confirmation.');
+        // Redirect to email confirmation page
+        navigate(`/email-confirmation?email=${encodeURIComponent(formData.email)}&userType=admin`);
       }
     } catch (error) {
       toast.error('An unexpected error occurred');
@@ -95,10 +125,15 @@ export function AdminSignup() {
                     id="email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={handleEmailChange}
+                    onBlur={handleEmailBlur}
                     required
-                    placeholder="Enter your email"
+                    placeholder="admin@farmetrics.org"
+                    className={`${emailError ? 'border-red-500' : ''} placeholder:text-gray-300 placeholder:opacity-60`}
                   />
+                  {emailError && (
+                    <p className="text-xs text-red-500 mt-1">{emailError}</p>
+                  )}
                 </div>
 
                 <div>

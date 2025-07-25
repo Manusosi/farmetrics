@@ -281,12 +281,14 @@ export function AdminActivityLog() {
       switch (dateFilter) {
         case 'today':
           return activityDate.toDateString() === now.toDateString();
-        case 'week':
+        case 'week': {
           const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
           return activityDate >= weekAgo;
-        case 'month':
+        }
+        case 'month': {
           const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
           return activityDate >= monthAgo;
+        }
         default:
           return true;
       }
@@ -347,8 +349,8 @@ export function AdminActivityLog() {
         <Button onClick={exportActivities} className="flex items-center gap-2">
           <Download className="h-4 w-4" />
           Export Log
-        </Button>
-      </div>
+                </Button>
+              </div>
 
       {/* Stats */}
       <div className="grid gap-4 md:grid-cols-4">
@@ -384,7 +386,7 @@ export function AdminActivityLog() {
               {activities.filter(a => 
                 new Date(a.timestamp) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
               ).length}
-            </div>
+        </div>
           </CardContent>
         </Card>
         <Card>
@@ -397,7 +399,7 @@ export function AdminActivityLog() {
           </CardContent>
         </Card>
       </div>
-
+      
       {/* Filters */}
       <Card>
         <CardHeader>
@@ -406,13 +408,13 @@ export function AdminActivityLog() {
         <CardContent>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <div>
-              <Input
-                placeholder="Search activities..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+            <Input
+              placeholder="Search activities..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full"
-              />
-            </div>
+            />
+          </div>
             
             <Select value={typeFilter} onValueChange={setTypeFilter}>
               <SelectTrigger>
@@ -463,7 +465,7 @@ export function AdminActivityLog() {
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       ) : filteredActivities.length === 0 ? (
-        <Card>
+      <Card>
           <CardContent className="text-center py-12">
             <Activity className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-medium text-muted-foreground">No activities found</h3>
@@ -480,10 +482,10 @@ export function AdminActivityLog() {
                   <CardTitle className="text-lg">
                     {format(new Date(date), 'EEEE, MMMM d, yyyy')}
                   </CardTitle>
-                  <CardDescription>
+          <CardDescription>
                     {dayActivities.length} activities
-                  </CardDescription>
-                </CardHeader>
+          </CardDescription>
+        </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {dayActivities.map((activity) => {
@@ -520,7 +522,7 @@ export function AdminActivityLog() {
                                 <Shield className="h-3 w-3" />
                                 {activity.userRole}
                               </span>
-                              <span>{activity.entity}</span>
+                                <span>{activity.entity}</span>
                             </div>
                           </div>
                         </div>
@@ -530,8 +532,8 @@ export function AdminActivityLog() {
                 </CardContent>
               </Card>
             ))}
-        </div>
-      )}
+            </div>
+          )}
     </div>
   );
 } 

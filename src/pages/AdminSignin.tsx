@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -11,13 +11,49 @@ import { Loader2, Shield } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 export function AdminSignin() {
+  const [searchParams] = useSearchParams();
+  const prefilledEmail = searchParams.get('email') || '';
+  
   const [formData, setFormData] = useState({
-    email: '',
+    email: prefilledEmail,
     password: '',
   });
+  const [emailError, setEmailError] = useState('');
   const [loading, setLoading] = useState(false);
   const { signIn, signOut, user, profile } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Update email if it comes from URL params
+    if (prefilledEmail && !formData.email) {
+      setFormData(prev => ({ ...prev, email: prefilledEmail }));
+    }
+  }, [prefilledEmail]);
+
+  const validateEmail = (email: string) => {
+    if (email && !email.endsWith('@farmetrics.org')) {
+      setEmailError('Invalid email domain');
+      return false;
+    }
+    setEmailError('');
+    return true;
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const email = e.target.value;
+    setFormData({ ...formData, email });
+    
+    // Validate on blur or when user stops typing
+    if (email) {
+      validateEmail(email);
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const handleEmailBlur = () => {
+    validateEmail(formData.email);
+  };
 
   useEffect(() => {
     // If we have both user and profile data
@@ -35,6 +71,13 @@ export function AdminSignin() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate email domain for admin accounts
+    if (!formData.email.endsWith('@farmetrics.org')) {
+      toast.error('Admin access requires a @farmetrics.org email address');
+      return;
+    }
+    
     setLoading(true);
 
     try {
@@ -89,10 +132,15 @@ export function AdminSignin() {
                     id="email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={handleEmailChange}
+                    onBlur={handleEmailBlur}
                     required
-                    placeholder="Enter your email"
+                    placeholder="admin@farmetrics.org"
+                    className={`${emailError ? 'border-red-500' : ''} placeholder:text-gray-300 placeholder:opacity-60`}
                   />
+                  {emailError && (
+                    <p className="text-xs text-red-500 mt-1">{emailError}</p>
+                  )}
                 </div>
 
                 <div>

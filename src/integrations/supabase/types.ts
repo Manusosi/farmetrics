@@ -324,6 +324,7 @@ export type Database = {
           approved_by: string | null
           created_at: string
           district: string | null
+          email: string | null
           full_name: string
           gender: string | null
           id: string
@@ -341,6 +342,7 @@ export type Database = {
           approved_by?: string | null
           created_at?: string
           district?: string | null
+          email?: string | null
           full_name: string
           gender?: string | null
           id?: string
@@ -358,6 +360,7 @@ export type Database = {
           approved_by?: string | null
           created_at?: string
           district?: string | null
+          email?: string | null
           full_name?: string
           gender?: string | null
           id?: string

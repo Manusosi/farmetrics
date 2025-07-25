@@ -394,9 +394,9 @@ export function AdminTransfers() {
                       {statusConfig[selectedTransfer.status as keyof typeof statusConfig].label}
                     </Badge>
                   </div>
+                  </div>
                 </div>
-              </div>
-
+                
               <div>
                 <Label className="text-sm font-medium">Reason for Transfer</Label>
                 <p className="text-sm mt-1">{selectedTransfer.reason}</p>

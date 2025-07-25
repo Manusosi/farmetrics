@@ -281,8 +281,7 @@ class NotificationService {
 
       if (shouldSendEmail) {
         // TODO: Implement email sending logic here
-        // This could be done via Supabase Edge Functions, third-party service, etc.
-        console.log(`Would send email for ${notificationData.type} to user ${userId}`);
+        // For now, we'll just create the notification in the database
       }
     } catch (error) {
       console.error('Error checking email preferences:', error);

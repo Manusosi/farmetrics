@@ -33,7 +33,7 @@ interface Transfer {
   region: string;
   district: string;
   reason: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: "pending" | "approved" | "rejected";
   requested_at: string;
   updated_at: string;
   requested_by: string;
@@ -73,7 +73,7 @@ export function SupervisorTransfers() {
           region: profile?.region || '',
           district: 'Kumasi',
           reason: 'Officer relocation',
-          status: 'pending',
+          status: 'pending' as const,
           requested_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
           requested_by: 'Field Supervisor'
@@ -86,7 +86,7 @@ export function SupervisorTransfers() {
           region: profile?.region || '',
           district: 'Takoradi',
           reason: 'Workload balancing',
-          status: 'approved',
+          status: 'approved' as const,
           requested_at: new Date(Date.now() - 86400000).toISOString(),
           updated_at: new Date().toISOString(),
           requested_by: 'Admin'

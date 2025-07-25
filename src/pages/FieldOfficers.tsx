@@ -195,7 +195,7 @@ export function FieldOfficers() {
                 </CardHeader>
                 <CardContent className="text-center space-y-6">
                   {loading ? (
-                    <div className="p-6 bg-muted/50 rounded-lg">
+                  <div className="p-6 bg-muted/50 rounded-lg">
                       <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto"></div>
                     </div>
                   ) : activeAPK ? (
@@ -230,8 +230,8 @@ export function FieldOfficers() {
                             {activeAPK.description}
                           </p>
                         )}
-                      </div>
-                      
+                  </div>
+                  
                       <Button 
                         size="lg" 
                         className="w-full"
@@ -245,11 +245,11 @@ export function FieldOfficers() {
                           </>
                         ) : (
                           <>
-                            <Download className="h-5 w-5 mr-2" />
+                    <Download className="h-5 w-5 mr-2" />
                             Download APK v{activeAPK.version}
                           </>
                         )}
-                      </Button>
+                  </Button>
                     </>
                   ) : (
                     <div className="p-6 bg-muted/50 rounded-lg">

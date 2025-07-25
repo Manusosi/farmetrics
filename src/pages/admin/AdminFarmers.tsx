@@ -307,44 +307,88 @@ export function AdminFarmers() {
   };
   
   // Handle adding a new farmer
-  const handleAddFarmer = () => {
-    // If location doesn't exist, add it to our database
-    if (newFarmer.district && newFarmer.location && !locationExists(newFarmer.district, newFarmer.location)) {
-      addLocation(newFarmer.district, newFarmer.location);
+  const handleAddFarmer = async () => {
+    if (!newFarmer.name || !newFarmer.region || !newFarmer.district) {
+      toast.error('Please fill in all required fields');
+      return;
     }
-    
-    // In a real app, you'd make an API call to add the farmer
-    console.log('Adding new farmer:', newFarmer);
-    setIsAddDialogOpen(false);
-    setNewFarmer({
-      name: '',
-      phone: '',
-      region: '',
-      district: '',
-      location: '',
-    });
-    setLocationInput('');
-  };
-  
-  // Handle editing a farmer
-  const handleEditFarmer = () => {
-    // If location doesn't exist, add it to our database
-    if (selectedFarmer.district && selectedFarmer.location && 
-        !locationExists(selectedFarmer.district, selectedFarmer.location)) {
-      addLocation(selectedFarmer.district, selectedFarmer.location);
+
+    try {
+      setIsAdding(true);
+      const { data, error } = await supabase
+        .from('farmers')
+        .insert(newFarmer)
+        .select('*')
+        .single();
+
+      if (error) throw error;
+
+      setFarmers(prev => [...prev, data]);
+      setShowAddForm(false);
+      setNewFarmer({ name: '', phone_number: '', region: '', district: '', location: '' });
+      toast.success('Farmer added successfully');
+    } catch (error: any) {
+      toast.error('Failed to add farmer: ' + error.message);
+    } finally {
+      setIsAdding(false);
     }
-    
-    // In a real app, you'd make an API call to update the farmer
-    console.log('Editing farmer:', selectedFarmer);
-    setIsEditDialogOpen(false);
-    setEditLocationInput('');
   };
-  
-  // Handle deleting a farmer
-  const handleDeleteFarmer = () => {
-    // In a real app, you'd make an API call to delete the farmer
-    console.log('Deleting farmer:', selectedFarmer);
-    setIsDeleteDialogOpen(false);
+
+  const handleEditFarmer = async () => {
+    if (!selectedFarmer || !selectedFarmer.name || !selectedFarmer.region || !selectedFarmer.district) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+
+    try {
+      setIsUpdating(true);
+      const { data, error } = await supabase
+        .from('farmers')
+        .update({
+          name: selectedFarmer.name,
+          phone_number: selectedFarmer.phone_number,
+          region: selectedFarmer.region,
+          district: selectedFarmer.district,
+          location: selectedFarmer.location,
+        })
+        .eq('id', selectedFarmer.id)
+        .select('*')
+        .single();
+
+      if (error) throw error;
+
+      setFarmers(prev => prev.map(f => f.id === selectedFarmer.id ? data : f));
+      setShowEditForm(false);
+      setSelectedFarmer(null);
+      toast.success('Farmer updated successfully');
+    } catch (error: any) {
+      toast.error('Failed to update farmer: ' + error.message);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const handleDeleteFarmer = async () => {
+    if (!selectedFarmer) return;
+
+    try {
+      setIsDeleting(true);
+      const { error } = await supabase
+        .from('farmers')
+        .delete()
+        .eq('id', selectedFarmer.id);
+
+      if (error) throw error;
+
+      setFarmers(prev => prev.filter(f => f.id !== selectedFarmer.id));
+      setShowDeleteDialog(false);
+      setSelectedFarmer(null);
+      toast.success('Farmer deleted successfully');
+    } catch (error: any) {
+      toast.error('Failed to delete farmer: ' + error.message);
+    } finally {
+      setIsDeleting(false);
+    }
   };
   
   // Open edit dialog and set the selected farmer

@@ -105,7 +105,7 @@ export function FarmMap({
         maxBoundsViscosity: 1.0,
         zoomControl: false
       });
-
+      
       // Add zoom control to top-right
       L.control.zoom({ position: 'topright' }).addTo(mapRef.current);
       
@@ -266,27 +266,27 @@ export function FarmMap({
       );
       
       if (validCoords.length > 0) {
-        // Draw polyline for the current points
+      // Draw polyline for the current points
         polylineRef.current = L.polyline(validCoords, {
-          color: '#3b82f6', // blue-500
-          weight: 3,
-          dashArray: '5, 10',
-        }).addTo(mapRef.current!);
-        
-        // If we have at least 3 points, draw the polygon
+        color: '#3b82f6', // blue-500
+        weight: 3,
+        dashArray: '5, 10',
+      }).addTo(mapRef.current!);
+      
+      // If we have at least 3 points, draw the polygon
         if (validCoords.length >= 3) {
           drawingLayerRef.current = L.polygon(validCoords, {
-            color: '#3b82f6', // blue-500
-            fillOpacity: 0.2,
-            weight: 2,
-          }).addTo(mapRef.current!);
-          
-          // Center map on the drawn polygon
+          color: '#3b82f6', // blue-500
+          fillOpacity: 0.2,
+          weight: 2,
+        }).addTo(mapRef.current!);
+        
+        // Center map on the drawn polygon
           const bounds = drawingLayerRef.current.getBounds();
           mapRef.current?.fitBounds(bounds, {
             padding: [20, 20],
             maxZoom: 16
-          });
+        });
         }
       }
     }

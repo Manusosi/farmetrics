@@ -26,6 +26,9 @@ import { AdminSignin } from './pages/AdminSignin';
 import { AdminSignup } from './pages/AdminSignup';
 import { SupervisorSignin } from './pages/SupervisorSignin';
 import { SupervisorSignup } from './pages/SupervisorSignup';
+import EmailConfirmation from './pages/EmailConfirmation';
+import EmailConfirmationSuccess from './pages/EmailConfirmationSuccess';
+import AuthConfirm from './pages/AuthConfirm';
 
 // Dashboard pages
 import { AdminDashboard } from './pages/AdminDashboard';
@@ -210,6 +213,11 @@ function App() {
                   <PageTransition><SupervisorSignin /></PageTransition>
               } />
               <Route path="/supervisor-signup" element={<PageTransition><SupervisorSignup /></PageTransition>} />
+              
+              {/* Email Confirmation Routes */}
+              <Route path="/email-confirmation" element={<PageTransition><EmailConfirmation /></PageTransition>} />
+              <Route path="/email-confirmation-success" element={<PageTransition><EmailConfirmationSuccess /></PageTransition>} />
+              <Route path="/auth/confirm" element={<AuthConfirm />} />
 
               {/* Mobile App Required Page */}
               <Route path="/mobile-app-required" element={<PageTransition><MobileAppRequired /></PageTransition>} />
